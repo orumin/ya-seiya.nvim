@@ -18,6 +18,7 @@ end
 
 function Seiya.clear_auto()
   Seiya.clear_bg_all()
+  vim.api.nvim_create_augroup("seiya_auto", {clear = true})
   vim.api.nvim_create_autocmd("ColorScheme", {
     group = "seiya_auto",
     pattern = "*",
@@ -40,15 +41,8 @@ end
 function Seiya.setup(opts)
   config.setup(opts)
 
-  vim.api.nvim_create_augroup("seiya_auto", {clear = true})
   if config.options.auto_enabled then
-    vim.api.nvim_create_autocmd("VimEnter", {
-      group = "seiya_auto",
-      pattern = "*",
-      callback = function ()
-        Seiya.clear_auto()
-      end
-    })
+    Seiya.clear_auto()
   end
 
   vim.api.nvim_create_user_command("SeiyaEnable", Seiya.clear_auto, {nargs = 0})
